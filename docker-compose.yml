@@ -1,0 +1,28 @@
+version: '3'
+services:
+  ark:
+    image: ark-image
+    ports:
+      - "7777:7777/udp"
+      - "7778:7778/udp"
+      - "27015:27015/udp"
+      - "32330:32330/tcp"
+    volumes:
+      - ./ark-files/config/GameUserSettings.ini:/home/ark/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+      - ./ark-files/config/Game.ini:/home/ark/ARK/ShooterGame/Saved/Config/LinuxServer/Game.ini
+      - ./ark-files/saves:/home/ark/ARK/ShooterGame/Saved/SavedArks
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - MAP=TheIsland
+      - SESSION_NAME=MyServer TheIsland
+      - SERVER_PASSWORD=
+      - SERVER_ADMIN_PASSWORD=my_admin_password
+    networks:
+      - iproxy
+    container_name: TheIsland
+
+networks:
+  iproxy:
+    name: iproxy
+    external: true
